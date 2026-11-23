@@ -1,9 +1,6 @@
 import os, base64, requests
 from fastapi import FastAPI, UploadFile, File, Form
 from dotenv import load_dotenv
-import os, base64, requests
-from fastapi import FastAPI, UploadFile, File, Form
-from dotenv import load_dotenv
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -17,11 +14,6 @@ app.add_middleware(                             # lets the game (github.io) talk
     allow_headers=["*"],
 )
 
-KEY = os.getenv("OPENROUTER_KEY")
-MODEL = "nvidia/nemotron-3.5-super-vl:free"
-
-load_dotenv()                                   # reads the .env file on my laptop
-app = FastAPI()
 KEY = os.getenv("OPENROUTER_KEY")
 MODEL = "nvidia/nemotron-3.5-super-vl:free"
 
@@ -47,9 +39,6 @@ def hunt(word: str = Form(...), photo: UploadFile = File(...)):
     return {"correct": text.strip().lower().startswith("yes")}
 
 
-
-
-
 @app.post("/speak")
 def speak(language: str = Form(...), recording: UploadFile = File(...)):
     reply = requests.post(
@@ -63,5 +52,5 @@ def speak(language: str = Form(...), recording: UploadFile = File(...)):
     return {"heard": reply.json()["text"]}
 
 @app.get("/")
-def home(): 
+def home():
     return FileResponse(os.path.join(os.path.dirname(__file__), "index.html"))   # shows the page
