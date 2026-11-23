@@ -63,5 +63,5 @@ def speak(language: str = Form(...), recording: UploadFile = File(...)):
     return {"heard": reply.json()["text"]}
 
 @app.get("/")
-def home():
+def home(): 
     return FileResponse(os.path.join(os.path.dirname(__file__), "index.html"))   # shows the page
