@@ -1,7 +1,24 @@
 import os, base64, requests
 from fastapi import FastAPI, UploadFile, File, Form
 from dotenv import load_dotenv
+import os, base64, requests
+from fastapi import FastAPI, UploadFile, File, Form
+from dotenv import load_dotenv
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+
+load_dotenv()                                   # reads the .env file on my laptop
+app = FastAPI()
+
+app.add_middleware(                             # lets the game (github.io) talk to this server
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+KEY = os.getenv("OPENROUTER_KEY")
+MODEL = "nvidia/nemotron-3.5-super-vl:free"
 
 load_dotenv()                                   # reads the .env file on my laptop
 app = FastAPI()
